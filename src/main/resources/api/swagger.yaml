@@ -1,0 +1,659 @@
+openapi: 3.0.1
+info:
+  title: FarmPontos
+  description: API para controle de pontos para empresas
+  version: 0.0.1
+  termsOfService: https://mockapi.io
+  contact:
+    name: Gabriel Menezes
+    email: gabriel.menezes@farmtech.com.br
+    url: https://www.linkedin.com/in/anjos-gabriel/
+  license:
+    name: 'Licença: GPLv3'
+    url: https://www.gnu.org/licenses/gpl-3.0.en.html
+externalDocs:
+  description: Documentação Burocrática
+  url: https://mockapi.io
+
+tags:
+  - name: usuario
+    description: Tudo Sobre o Usuario
+  - name: funcionario
+    description: Tudo Sobre Funcionario
+  - name: ponto
+    description: Altere e Consulte seus pontos
+  - name: empresa
+    description: Altere e Consulte seus dados empresariais
+paths:
+  /usuario:
+    get:
+      tags:
+        - usuario
+      summary: Recupera todos os usuarios
+      operationId: listaUsuario
+      security:
+        - auth: []
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUsuario'
+    post:
+      tags:
+        - usuario
+      summary: Cria novo usuario
+      operationId: cadastroUsuario
+      security:
+        - auth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requestPayloadUsuario'
+      responses:
+        '201':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUsuario'
+  /usuario/{id}:
+    get:
+      tags:
+        - usuario
+      summary: Recupera uma usuario pelo ID
+      operationId: listaUsuarioId
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUsuario'
+        '404':
+          description: usuario não encontrado
+          content:
+            application/json:
+              example: Not Found
+    delete:
+      tags:
+        - usuario
+      summary: Exclui um usuario pelo ID
+      operationId: deleteUsuario
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUsuario'
+    put:
+      tags:
+        - usuario
+      summary: Altera um usuario pelo ID
+      operationId: alteraUsuario
+      security:
+        - auth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requestPayloadUsuario'
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUsuario'
+  /usuario/ativa/{id}:
+    get:
+      tags:
+        - usuario
+      summary: Reativa um Usuario
+      operationId: reativaUsuario
+      security:
+        - auth: [ ]
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUsuario'
+        '404':
+          description: usuario não encontrado
+          content:
+            application/json:
+              example: Not Found
+  /funcionario:
+    get:
+      tags:
+        - funcionario
+      summary: Recupera todas as funcionarios
+      operationId: listaFuncionario
+      security:
+        - auth: []
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseFuncionario'
+    post:
+      tags:
+        - funcionario
+      summary: Adiciona uma nova funcionario
+      operationId: cadastroFuncionario
+      security:
+        - auth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requestPayloadFuncionario'
+      responses:
+        '201':
+          description: Funcionario Criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseFuncionario'
+  /funcionario/{id}:
+    get:
+      tags:
+        - funcionario
+      summary: Recupera uma funcionario pelo ID
+      operationId: listaFuncionarioId
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseFuncionario'
+        '404':
+          description: funcionario não encontrada
+          content:
+            application/json:
+              example: Not Found
+    delete:
+      tags:
+        - funcionario
+      summary: Exclui funcionario pelo ID
+      operationId: deleteFuncionario
+      security:
+        - auth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseFuncionario'
+    put:
+      tags:
+        - funcionario
+      summary: Altera uma funcionario pelo ID
+      operationId: alteraFuncionario
+      security:
+        - auth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requestPayloadFuncionario'
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseFuncionario'
+
+  /funcionario/ativa/{id}:
+    get:
+      tags:
+        - funcionario
+      summary: Reativa um Funcionario
+      operationId: reativaFuncionario
+      security:
+        - auth: [ ]
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseFuncionario'
+        '404':
+          description: funcionario não encontrado
+          content:
+            application/json:
+              example: Not Found
+  /ponto:
+    get:
+      tags:
+        - ponto
+      summary: Recupera Todos os Pontos
+      operationId: listaPonto
+      security:
+        - auth: []
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responsePonto'
+    post:
+      tags:
+        - ponto
+      summary: Adiciona um novo Ponto
+      operationId: cadastroPonto
+      security:
+        - auth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requestPayloadPonto'
+      responses:
+        '201':
+          description: Ponto Criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responsePonto'
+  /ponto/{id}:
+    parameters:
+      - name: id
+        in: path
+        schema:
+          type: integer
+        required: true
+    get:
+      tags:
+        - ponto
+      summary: Recupera um ponto pelo ID
+      operationId: listaPontoId
+      security:
+        - auth: []
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responsePonto'
+    delete:
+      tags:
+        - ponto
+      summary: Exclui ponto pelo ID
+      operationId: deletePonto
+      security:
+        - auth: []
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responsePonto'
+    put:
+      tags:
+        - ponto
+      summary: Altera um ponto pelo ID
+      operationId: alteraPonto
+      security:
+        - auth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requestPayloadPonto'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responsePonto'
+  /empresa:
+    get:
+      tags:
+        - empresa
+      summary: Recupera todas as empresas
+      operationId: listaEmpresa
+      security:
+        - auth: []
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseEmpresa'
+    post:
+      tags:
+        - empresa
+      summary: Adiciona uma nova Empresa
+      operationId: cadastroEmpresa
+      security:
+        - auth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requestPayloadEmpresa'
+      responses:
+        '201':
+          description: Ponto Criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseEmpresa'
+  /empresa/{id}:
+    parameters:
+      - name: id
+        in: path
+        schema:
+          type: integer
+        required: true
+    get:
+      tags:
+        - empresa
+      summary: Recupera uma empresa pelo ID
+      operationId: listaEmpresaId
+      security:
+        - auth: []
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseEmpresa'
+    delete:
+      tags:
+        - empresa
+      summary: Exclui uma empresa pelo ID
+      operationId: deleteEmpresa
+      security:
+        - auth: []
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseEmpresa'
+    put:
+      tags:
+        - empresa
+      summary: Altera uma empresa pelo ID
+      operationId: alteraEmpresa
+      security:
+        - auth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requestPayloadEmpresa'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseEmpresa'
+
+  /empresa/ativa/{id}:
+    get:
+      tags:
+        - empresa
+      summary: Reativa uma Empresa
+      operationId: reativaEmpresa
+      security:
+        - auth: [ ]
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseEmpresa'
+        '404':
+          description: empresa não encontrada
+          content:
+            application/json:
+              example: Not Found
+components:
+  schemas:
+    responseUsuario:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id_usuario:
+                type: integer
+              status:
+                type: string
+              nome:
+                type: string
+              email:
+                type: string
+              cpf:
+                type: string
+              nascimento:
+                type: string
+              foto:
+                type: string
+    requestPayloadUsuario:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            nome:
+              type: string
+            email:
+              type: string
+            senha:
+              type: string
+            cpf:
+              type: string
+            nascimento:
+              type: string
+            foto:
+              type: string
+    requestPayloadFuncionario:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            tipo:
+              type: string
+            cargo:
+              type: string
+            data_admissao:
+              type: string
+            data_demissao:
+              type: string
+            id_usuario:
+              type: integer
+            id_empresa:
+              type: integer
+    responseFuncionario:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id_funcionario:
+                type: integer
+              status:
+                type: string
+              tipo:
+                type: string
+              cargo:
+                type: string
+              data_admissao:
+                type: string
+              data_demissao:
+                type: string
+              id_usuario:
+                type: integer
+              id_empresa:
+                type: integer
+    responsePonto:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id_ponto:
+                type: integer
+              tipo:
+                type: string
+              dia:
+                type: string
+              horario:
+                type: string
+              observacao:
+                type: string
+              id_funcionario:
+                type: integer
+    requestPayloadPonto:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            tipo:
+              type: string
+            dia:
+              type: string
+            horario:
+              type: string
+            observacao:
+              type: string
+            id_funcionario:
+              type: integer
+    responseEmpresa:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id_empresa:
+                type: integer
+              status:
+                type: string
+              nome:
+                type: string
+              cnpj:
+                type: string
+              telefone:
+                type: string
+              email:
+                type: string
+    requestPayloadEmpresa:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            nome:
+              type: string
+            cnpj:
+              type: string
+            telefone:
+              type: string
+            email:
+              type: string
+  securitySchemes:
+    auth:
+      type: http
+      scheme: bearer
