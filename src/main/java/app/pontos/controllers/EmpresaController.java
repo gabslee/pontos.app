@@ -1,15 +1,14 @@
 package app.pontos.controllers;
 
+import app.pontos.apis.EmpresaApi;
+import app.pontos.components.RequestPayloadEmpresa;
+import app.pontos.components.ResponseEmpresa;
 import app.pontos.mappers.EmpresaMapper;
 import app.pontos.models.Empresa;
 import app.pontos.services.EmpresaService;
-import br.com.crud.apis.EmpresaApi;
-import br.com.crud.components.RequestPayloadEmpresa;
-import br.com.crud.components.ResponseEmpresa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
@@ -22,6 +21,7 @@ public class EmpresaController implements EmpresaApi {
     EmpresaService service;
 
 
+   //LISTAGEM DOS ITENS ATRAVÉS DOS MÉTODOS GERADOS PELO CONTRATO
     @Override
     @GetMapping
     public ResponseEntity<ResponseEmpresa> listaEmpresa() {
@@ -31,6 +31,8 @@ public class EmpresaController implements EmpresaApi {
         return ResponseEntity.ok(response);
         }
 
+
+        //LISTAGEM DOS ITENS POR ID ATRAVÉS DOS MÉTODOS GERADOS PELO CONTRATO
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<ResponseEmpresa> listaEmpresaId(@PathVariable("id") Integer id) {
@@ -40,6 +42,9 @@ public class EmpresaController implements EmpresaApi {
         return ResponseEntity.ok(response);
     }
 
+
+
+    //EXCLUSÃO LÓGICA DOS ITENS POR ID ATRAVÉS DOS MÉTODOS GERADO PELO CONTRATO
     @Override
     @DeleteMapping("/{id}")
     @Transactional
@@ -51,6 +56,9 @@ public class EmpresaController implements EmpresaApi {
         return ResponseEntity.ok(responseEmpresa);
     }
 
+
+
+    //CADASTRO DE NOVOS ITENS ATRAVÉS DOS MÉTODOS GERADO PELO CONTRATO
     @Override
     @PostMapping
     @Transactional
@@ -62,17 +70,25 @@ public class EmpresaController implements EmpresaApi {
         return ResponseEntity.ok(response);
     }
 
+
+
+    //ALTERAÇÃO DOS ITENS ATRAVÉS DOS MÉTODOS GERADOS PELO CONTRATO
     @Override
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<ResponseEmpresa> alteraEmpresa(@PathVariable("id")Integer id,@RequestBody RequestPayloadEmpresa requestPayloadEmpresa) {
         ResponseEmpresa response = new ResponseEmpresa();
+        Empresa validador = service.validador(id.longValue());
         Empresa empresa = service.fromRequest(requestPayloadEmpresa);
+        empresa = service.validaEmpresa(empresa,validador);
         empresa = service.update(empresa, id.longValue());
         response.setData(Collections.singletonList(EmpresaMapper.toResponse(empresa)));
         return ResponseEntity.ok(response);
     }
 
+
+
+    //ATIVAÇÃO LÓGICA DOS ITENS ATRAVÉS DO MÉTODO "REATIVA" CRIADO NA CLASSE SERVICE
     @Override
     @GetMapping("/ativa/{id}")
     @Transactional

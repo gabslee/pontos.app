@@ -1,3 +1,6 @@
+//ENUM PARA VALIDAÇÃO DO TIPO DE FUNCIONARIO CRIADO/ALTERADO
+
+
 package app.pontos.enums;
 
 public enum tipo_funcionario {

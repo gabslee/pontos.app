@@ -11,9 +11,9 @@ info:
   license:
     name: 'Licença: GPLv3'
     url: https://www.gnu.org/licenses/gpl-3.0.en.html
-externalDocs:
-  description: Documentação Burocrática
-  url: https://mockapi.io
+
+servers:
+  - url: localhost:8081/swager-ui/index.html
 
 tags:
   - name: usuario
@@ -261,7 +261,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseFuncionario'
-
   /funcionario/ativa/{id}:
     get:
       tags:
@@ -464,7 +463,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseEmpresa'
-
   /empresa/ativa/{id}:
     get:
       tags:
@@ -533,6 +531,7 @@ components:
               type: string
             nascimento:
               type: string
+              example: aaaa-mm-dd
             foto:
               type: string
     requestPayloadFuncionario:
@@ -543,12 +542,15 @@ components:
           properties:
             tipo:
               type: string
+              example: ADMINISTRADOR/COLABORADOR
             cargo:
               type: string
             data_admissao:
               type: string
+              example: aaaa-mm-dd
             data_demissao:
               type: string
+              example: aaaa-mm-dd
             id_usuario:
               type: integer
             id_empresa:
@@ -609,10 +611,13 @@ components:
           properties:
             tipo:
               type: string
+              example: ENTRADA/SAIDA
             dia:
               type: string
+              example: aaaa-mm-dd
             horario:
               type: string
+              example: HH:MM
             observacao:
               type: string
             id_funcionario:
@@ -639,6 +644,8 @@ components:
                 type: string
               email:
                 type: string
+              id_usuario:
+                type: integer
     requestPayloadEmpresa:
       type: object
       properties:
@@ -653,6 +660,8 @@ components:
               type: string
             email:
               type: string
+            id_usuario:
+              type: integer
   securitySchemes:
     auth:
       type: http

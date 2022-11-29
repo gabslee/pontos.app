@@ -2,9 +2,9 @@ package app.pontos.mappers;
 
 
 
+import app.pontos.components.ResponsePontoData;
 import app.pontos.enums.tipo_ponto;
 import app.pontos.models.Ponto;
-import br.com.crud.components.ResponsePontoData;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PontoMapper {
-    
+
+
+    //método que converte dado Ponto em um dado ResponsePonto
     public static ResponsePontoData toResponse(Ponto ponto){
         ResponsePontoData responsePonto = new ResponsePontoData();
         responsePonto.setIdPonto(ponto.getId().intValue());
@@ -20,7 +22,7 @@ public class PontoMapper {
         responsePonto.setDia(String.valueOf(ponto.getDia()));
         responsePonto.setHorario(String.valueOf(ponto.getHorario()));
         responsePonto.setObservacao(ponto.getObservacao());
-        responsePonto.setIdFuncionario(Math.toIntExact(ponto.getId_funcionario().getId()));
+        responsePonto.setIdFuncionario(Math.toIntExact(ponto.getId_funcionario()));
         return responsePonto;
     }
 
@@ -30,7 +32,11 @@ public class PontoMapper {
         pontos.forEach(ponto -> responsePontoData.add(toResponse(ponto)));
         return responsePontoData;
     }
-    
+
+
+
+
+    //método que utiliza uma lista para conversão de dados ResponsePonto em Ponto
     static Ponto toModel(ResponsePontoData responsePontoData){
         Ponto ponto = new Ponto();
         ponto.setId(responsePontoData.getIdPonto().longValue());
@@ -38,6 +44,7 @@ public class PontoMapper {
         ponto.setDia(LocalDate.parse(responsePontoData.getDia()));
         ponto.setHorario(LocalTime.parse(responsePontoData.getHorario()));
         ponto.setObservacao(responsePontoData.getObservacao());
+        ponto.setId_funcionario(responsePontoData.getIdFuncionario());
         return ponto;
     }
 

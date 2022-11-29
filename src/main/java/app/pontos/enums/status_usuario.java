@@ -1,3 +1,6 @@
+//ENUM DE RESPRESENTAÇÃO DE STATUS PARA EXCLUSÃO LÓGICA DO ATRIBUTO
+
+
 package app.pontos.enums;
 
 public enum status_usuario {

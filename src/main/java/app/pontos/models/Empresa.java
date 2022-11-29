@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Entity(name = "Empresa")
 @Table(name = "empresas")
 @EqualsAndHashCode(of = "id")
+//MAPEAMENTO DE ENTIDADE ATRAVÉS DA JPA
 public class Empresa {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +26,14 @@ public class Empresa {
     @Column(name = "status")
     status_empresa status = status_empresa.ATIVO;
 
+    @Column(name = "id_usuario")
+    Integer id_usuario;
 
+    @ManyToOne
+    @JoinColumn(name = "id_usuario", insertable = false, updatable = false)
+    Usuario usuario;
+
+    public void setId_usuario(Integer id_usuario) {
+        this.id_usuario = id_usuario;
+    }
 }

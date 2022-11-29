@@ -1,3 +1,6 @@
+/*INTERFACE QUE ESTENDE A JPA PARA FUTURA IMPLEMENTAÇÃO DOS MÉTODOS JA HERDADOS */
+
+
 package app.pontos.repository;
 
 import app.pontos.models.Usuario;

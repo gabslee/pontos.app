@@ -1,0 +1,23 @@
+version: '3'
+services:
+  mysql-standalone:
+    image: 'mysql:5.7'
+    environment:
+      - MYSQL_ROOT_PASSWORD=Genilton3@
+      - MYSQLO_PASSWORD=Genilton3@
+      - MYSQL_DATABASE=demo
+    ports:
+      - "3306:3306"
+  ponto-app-container:
+    image: ponto-app-container
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/mydb?autoReconnect=true&useSSL=false
+      SPRING_DATASOUCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "Genilton3@"
+    build:
+      context: "./"
+      dockerfile: "Dockerfile"
+    depends_on:
+      - mysql-standalone

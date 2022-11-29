@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Entity(name = "Usuario")
 @Table(name = "usuarios")
 @EqualsAndHashCode(of = "id")
+//MAPEAMENTO DE ENTIDADE ATRAVÉS DA JPA
 public class Usuario {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

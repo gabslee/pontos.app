@@ -5,9 +5,9 @@ package app.pontos.mappers;
 
 
 
+import app.pontos.components.ResponseUsuarioData;
 import app.pontos.enums.status_usuario;
 import app.pontos.models.Usuario;
-import br.com.crud.components.ResponseUsuarioData;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,8 +15,7 @@ import java.util.List;
 
 public class UsuarioMapper {
 
-    //método que converte dado Autor em um dado ResponseAutor
-
+    //método que converte dado Usuario em um dado ResponseUsuario
     public static ResponseUsuarioData toResponse(Usuario usuario) {
         ResponseUsuarioData resposeUsuario = new ResponseUsuarioData();
         resposeUsuario.setIdUsuario(usuario.getId().intValue());
@@ -29,7 +28,7 @@ public class UsuarioMapper {
         return resposeUsuario;
     }
 
-    //método que utiliza uma lista para conversão de dados de Autor em ResponseAutor
+    //método que utiliza uma lista para conversão de dados de Usuario em ResponseUsuario
     public static List<ResponseUsuarioData> toResponse(List<Usuario> usuarios){
         List<ResponseUsuarioData> responseUsuario = new ArrayList<>();
         usuarios.forEach(usuario -> responseUsuario.add(toResponse(usuario)));
@@ -50,7 +49,7 @@ public class UsuarioMapper {
         return usuario;
     }
 
-    //método que utiliza uma lista para conversão de dados ResponseAutor em Usuario
+    //método que utiliza uma lista para conversão de dados ResponseUsuario em Usuario
     static List<Usuario> toModel(List<ResponseUsuarioData> responseUsuarios){
         List<Usuario> usuarios = new ArrayList<>();
         responseUsuarios.forEach(responseUsuario -> {

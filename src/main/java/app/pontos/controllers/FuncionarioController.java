@@ -1,11 +1,11 @@
 package app.pontos.controllers;
 
+import app.pontos.apis.FuncionarioApi;
+import app.pontos.components.RequestPayloadFuncionario;
+import app.pontos.components.ResponseFuncionario;
 import app.pontos.mappers.FuncionarioMapper;
 import app.pontos.models.Funcionario;
 import app.pontos.services.FuncionarioService;
-import br.com.crud.apis.FuncionarioApi;
-import br.com.crud.components.RequestPayloadFuncionario;
-import br.com.crud.components.ResponseFuncionario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +21,7 @@ public class FuncionarioController implements FuncionarioApi {
     @Autowired
     FuncionarioService service;
 
+    //LISTAGEM DOS ITENS ATRAVÉS DOS MÉTODOS GERADOS PELO CONTRATO
     @GetMapping
     @Override
     public ResponseEntity<ResponseFuncionario> listaFuncionario() {
@@ -30,6 +31,10 @@ public class FuncionarioController implements FuncionarioApi {
         return ResponseEntity.ok(response);
     }
 
+
+
+
+    //LISTAGEM DOS ITENS POR ID ATRAVÉS DOS MÉTODOS GERADOS PELO CONTRATO
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<ResponseFuncionario> listaFuncionarioId(@PathVariable("id") Integer id) {
@@ -39,6 +44,10 @@ public class FuncionarioController implements FuncionarioApi {
         return ResponseEntity.ok(response);
     }
 
+
+
+
+    //EXCLUSÃO LÓGICA DOS ITENS POR ID ATRAVÉS DOS MÉTODOS GERADO PELO CONTRATO
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseFuncionario> deleteFuncionario(@PathVariable("id") Integer id) {
@@ -49,6 +58,9 @@ public class FuncionarioController implements FuncionarioApi {
         return ResponseEntity.ok(response);
     }
 
+
+
+    //CADASTRO DE NOVOS ITENS ATRAVÉS DOS MÉTODOS GERADO PELO CONTRATO
     @Override
     @PostMapping
     @Transactional
@@ -60,16 +72,28 @@ public class FuncionarioController implements FuncionarioApi {
         return ResponseEntity.ok(response);
     }
 
+
+
+
+    //ALTERAÇÃO DOS ITENS ATRAVÉS DOS MÉTODOS GERADOS PELO CONTRATO
     @Override
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<ResponseFuncionario> alteraFuncionario(@PathVariable("id") Integer id, @RequestBody RequestPayloadFuncionario requestPayloadFuncionario) {
         ResponseFuncionario response = new ResponseFuncionario();
+        Funcionario validador = service.validador(id.longValue());
         Funcionario funcionario = service.fromRequest(requestPayloadFuncionario);
-        funcionario = service.update(funcionario, funcionario.id);
+        funcionario = service.validaFuncionario(funcionario,validador);
+        funcionario = service.update(funcionario, id.longValue());
         response.setData(Collections.singletonList(FuncionarioMapper.toResponse(funcionario)));
         return ResponseEntity.ok(response);
     }
+
+
+
+
+
+    //ATIVAÇÃO LÓGICA DOS ITENS ATRAVÉS DO MÉTODO "REATIVA" CRIADO NA CLASSE SERVICE
     @Override
     @GetMapping("/ativa/{id}")
     @Transactional

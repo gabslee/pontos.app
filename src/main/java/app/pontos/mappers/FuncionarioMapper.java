@@ -1,10 +1,10 @@
 package app.pontos.mappers;
 
 
+import app.pontos.components.ResponseFuncionarioData;
 import app.pontos.enums.status_funcionario;
 import app.pontos.enums.tipo_funcionario;
 import app.pontos.models.Funcionario;
-import br.com.crud.components.ResponseFuncionarioData;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,7 +14,6 @@ public class FuncionarioMapper {
 
     //método que converte dado Funcionario em um dado ResponseFuncionario
 
-
     public static ResponseFuncionarioData toResponse(Funcionario funcionario) {
         ResponseFuncionarioData responseFuncionario = new ResponseFuncionarioData();
         responseFuncionario.setIdFuncionario(funcionario.getId().intValue());
@@ -23,8 +22,8 @@ public class FuncionarioMapper {
         responseFuncionario.setCargo(funcionario.getCargo());
         responseFuncionario.setDataAdmissao(String.valueOf(funcionario.getData_admissao()));
         responseFuncionario.setDataDemissao(String.valueOf(funcionario.getData_demissao()));
-        responseFuncionario.setIdUsuario(Math.toIntExact(funcionario.getId_usuario().getId()));
-        responseFuncionario.setIdEmpresa(Math.toIntExact(funcionario.getId_empresa().getId()));
+        responseFuncionario.setIdUsuario(Math.toIntExact(funcionario.getId_usuario()));
+        responseFuncionario.setIdEmpresa(Math.toIntExact(funcionario.getId_empresa()));
         return responseFuncionario;
     }
 

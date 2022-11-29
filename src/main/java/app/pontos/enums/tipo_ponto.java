@@ -1,3 +1,7 @@
+//ENUM PARA VALIDAÇÃO DO TIPO DE PONTO CRIADO/ALTERADO
+
+
+
 package app.pontos.enums;
 
 public enum tipo_ponto {
