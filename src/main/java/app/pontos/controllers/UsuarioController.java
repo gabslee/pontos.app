@@ -6,6 +6,7 @@ import app.pontos.components.ResponseUsuario;
 import app.pontos.mappers.UsuarioMapper;
 import app.pontos.models.Usuario;
 import app.pontos.services.UsuarioService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("usuario")
+@Tag(name = "Usuario", description = "the Usuario API")
 public class UsuarioController implements UsuarioApi {
 
     @Autowired

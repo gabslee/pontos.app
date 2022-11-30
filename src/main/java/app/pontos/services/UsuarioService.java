@@ -88,6 +88,7 @@ public class UsuarioService {
      * NO CASO DE ALGUMA MUDAÇA SER FEITA EM SOMENTE UM CAMPO*/
     public Usuario fromRequest(RequestPayloadUsuario requestPayloadUsuario){
         Usuario usuario = new Usuario();
+
         if(requestPayloadUsuario.getData().getNome() != null){
         usuario.setNome(requestPayloadUsuario.getData().getNome());}
         if(requestPayloadUsuario.getData().getEmail() != null){

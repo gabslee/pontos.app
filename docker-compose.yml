@@ -1,23 +1,24 @@
-version: '3'
+version: '2'
+volumes:
+  data-volume:
+  dbmysql-mysql-data:
+    driver: local
+
 services:
-  mysql-standalone:
-    image: 'mysql:5.7'
-    environment:
-      - MYSQL_ROOT_PASSWORD=Genilton3@
-      - MYSQLO_PASSWORD=Genilton3@
-      - MYSQL_DATABASE=demo
+  mysql:
+    image: mysql:8.0
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    container_name: dbmysql-mysql
+    volumes:
+      - dbmysql-mysql-data:/var/lib/mysql
     ports:
       - "3306:3306"
-  ponto-app-container:
-    image: ponto-app-container
-    ports:
-      - "8081:8081"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/mydb?autoReconnect=true&useSSL=false
-      SPRING_DATASOUCE_USERNAME: "root"
-      SPRING_DATASOURCE_PASSWORD: "Genilton3@"
+      - MYSQL_ROOT_PASSWORD=dbmysql
+      - MYSQL_DATABASE=dbmysql
+      - MYSQL_USER=dbmysql
+      - MYSQL_PASSWORD=dbmysql
+  app.pontos:
     build:
-      context: "./"
-      dockerfile: "Dockerfile"
-    depends_on:
-      - mysql-standalone
+
+
