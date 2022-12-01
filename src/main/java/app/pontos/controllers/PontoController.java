@@ -2,11 +2,13 @@ package app.pontos.controllers;
 
 
 import app.pontos.apis.PontoApi;
+import app.pontos.apis.PontoApiDelegate;
 import app.pontos.components.RequestPayloadPonto;
 import app.pontos.components.ResponsePonto;
 import app.pontos.mappers.PontoMapper;
 import app.pontos.models.Ponto;
 import app.pontos.services.PontoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +18,7 @@ import java.util.Collections;
 import java.util.List;
 
 @RestController
-@RequestMapping("ponto")
-public class PontoController implements PontoApi {
+public class PontoController implements PontoApiDelegate {
 
     @Autowired
     PontoService service;
@@ -26,7 +27,6 @@ public class PontoController implements PontoApi {
 
     //LISTAGEM DOS ITENS ATRAVÉS DOS MÉTODOS GERADOS PELO CONTRATO
     @Override
-    @GetMapping
     public ResponseEntity<ResponsePonto> listaPonto() {
         ResponsePonto response = new ResponsePonto();
         List<Ponto> pontos = service.findAll();
@@ -39,7 +39,6 @@ public class PontoController implements PontoApi {
 
     //LISTAGEM DOS ITENS POR ID ATRAVÉS DOS MÉTODOS GERADOS PELO CONTRATO
     @Override
-    @GetMapping("/{id}")
     public ResponseEntity<ResponsePonto> listaPontoId(@PathVariable("id") Integer id) {
         ResponsePonto response = new ResponsePonto();
         Ponto ponto = service.findById(id.longValue());
@@ -52,7 +51,6 @@ public class PontoController implements PontoApi {
 
     //EXCLUSÃO REAL DOS ITENS POR ID ATRAVÉS DOS MÉTODOS GERADO PELO CONTRATO
     @Override
-    @DeleteMapping("/{id}")
     public ResponseEntity<ResponsePonto> deletePonto(@PathVariable("id") Integer id) {
         ResponsePonto response = new ResponsePonto();
         Ponto ponto = service.findById(id.longValue());
@@ -66,8 +64,6 @@ public class PontoController implements PontoApi {
 
     //CADASTRO DE NOVOS ITENS ATRAVÉS DOS MÉTODOS GERADO PELO CONTRATO
     @Override
-    @PostMapping
-    @Transactional
     public ResponseEntity<ResponsePonto> cadastroPonto(@RequestBody RequestPayloadPonto requestPayloadPonto) {
         ResponsePonto response = new ResponsePonto();
         Ponto ponto = service.fromRequest(requestPayloadPonto);
@@ -81,8 +77,6 @@ public class PontoController implements PontoApi {
 
     //ALTERAÇÃO DOS ITENS ATRAVÉS DOS MÉTODOS GERADOS PELO CONTRATO
     @Override
-    @PutMapping("/{id}")
-    @Transactional
     public ResponseEntity<ResponsePonto> alteraPonto(@PathVariable("id") Integer id,@RequestBody RequestPayloadPonto requestPayloadPonto) {
         ResponsePonto response = new ResponsePonto();
         Ponto validador = service.validador(id.longValue());

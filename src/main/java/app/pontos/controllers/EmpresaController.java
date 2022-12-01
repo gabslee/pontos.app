@@ -1,11 +1,13 @@
 package app.pontos.controllers;
 
 import app.pontos.apis.EmpresaApi;
+import app.pontos.apis.EmpresaApiDelegate;
 import app.pontos.components.RequestPayloadEmpresa;
 import app.pontos.components.ResponseEmpresa;
 import app.pontos.mappers.EmpresaMapper;
 import app.pontos.models.Empresa;
 import app.pontos.services.EmpresaService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 @RestController
-@RequestMapping("empresa")
-public class EmpresaController implements EmpresaApi {
+public class EmpresaController implements EmpresaApiDelegate {
 
     @Autowired
     EmpresaService service;
@@ -23,7 +24,6 @@ public class EmpresaController implements EmpresaApi {
 
    //LISTAGEM DOS ITENS ATRAVÉS DOS MÉTODOS GERADOS PELO CONTRATO
     @Override
-    @GetMapping
     public ResponseEntity<ResponseEmpresa> listaEmpresa() {
         ResponseEmpresa response = new ResponseEmpresa();
         List<Empresa> empresas = service.findAll();
@@ -34,7 +34,6 @@ public class EmpresaController implements EmpresaApi {
 
         //LISTAGEM DOS ITENS POR ID ATRAVÉS DOS MÉTODOS GERADOS PELO CONTRATO
     @Override
-    @GetMapping("/{id}")
     public ResponseEntity<ResponseEmpresa> listaEmpresaId(@PathVariable("id") Integer id) {
         ResponseEmpresa response = new ResponseEmpresa();
         Empresa empresa = service.findById(id.longValue());
@@ -44,10 +43,10 @@ public class EmpresaController implements EmpresaApi {
 
 
 
+
+
     //EXCLUSÃO LÓGICA DOS ITENS POR ID ATRAVÉS DOS MÉTODOS GERADO PELO CONTRATO
     @Override
-    @DeleteMapping("/{id}")
-    @Transactional
     public ResponseEntity<ResponseEmpresa> deleteEmpresa(@PathVariable("id")Integer id) {
         ResponseEmpresa responseEmpresa = new ResponseEmpresa();
         Empresa empresa = service.findById(id.longValue());
@@ -60,8 +59,6 @@ public class EmpresaController implements EmpresaApi {
 
     //CADASTRO DE NOVOS ITENS ATRAVÉS DOS MÉTODOS GERADO PELO CONTRATO
     @Override
-    @PostMapping
-    @Transactional
     public ResponseEntity<ResponseEmpresa> cadastroEmpresa(@RequestBody RequestPayloadEmpresa requestPayloadEmpresa) {
         ResponseEmpresa response = new ResponseEmpresa();
         Empresa empresa = service.fromRequest(requestPayloadEmpresa);
@@ -74,8 +71,6 @@ public class EmpresaController implements EmpresaApi {
 
     //ALTERAÇÃO DOS ITENS ATRAVÉS DOS MÉTODOS GERADOS PELO CONTRATO
     @Override
-    @PutMapping("/{id}")
-    @Transactional
     public ResponseEntity<ResponseEmpresa> alteraEmpresa(@PathVariable("id")Integer id,@RequestBody RequestPayloadEmpresa requestPayloadEmpresa) {
         ResponseEmpresa response = new ResponseEmpresa();
         Empresa validador = service.validador(id.longValue());
@@ -90,8 +85,6 @@ public class EmpresaController implements EmpresaApi {
 
     //ATIVAÇÃO LÓGICA DOS ITENS ATRAVÉS DO MÉTODO "REATIVA" CRIADO NA CLASSE SERVICE
     @Override
-    @GetMapping("/ativa/{id}")
-    @Transactional
     public ResponseEntity<ResponseEmpresa> reativaEmpresa(@PathVariable("id") Integer id) {
         ResponseEmpresa responseEmpresa = new ResponseEmpresa();
         Empresa empresa = service.reativa(id.longValue());

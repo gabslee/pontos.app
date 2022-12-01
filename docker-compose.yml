@@ -18,7 +18,6 @@ services:
       - MYSQL_DATABASE=dbmysql
       - MYSQL_USER=dbmysql
       - MYSQL_PASSWORD=dbmysql
-  app.pontos:
-    build:
+
 
 

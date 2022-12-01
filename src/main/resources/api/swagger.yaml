@@ -12,8 +12,6 @@ info:
     name: 'Licença: GPLv3'
     url: https://www.gnu.org/licenses/gpl-3.0.en.html
 
-servers:
-  - url: localhost:8081/swager-ui/index.html
 
 tags:
   - name: usuario

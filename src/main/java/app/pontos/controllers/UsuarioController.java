@@ -1,6 +1,7 @@
 package app.pontos.controllers;
 
 import app.pontos.apis.UsuarioApi;
+import app.pontos.apis.UsuarioApiDelegate;
 import app.pontos.components.RequestPayloadUsuario;
 import app.pontos.components.ResponseUsuario;
 import app.pontos.mappers.UsuarioMapper;
@@ -15,9 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 @RestController
-@RequestMapping("usuario")
-@Tag(name = "Usuario", description = "the Usuario API")
-public class UsuarioController implements UsuarioApi {
+public class UsuarioController implements UsuarioApiDelegate {
 
     @Autowired
     UsuarioService service;
@@ -25,7 +24,6 @@ public class UsuarioController implements UsuarioApi {
 
 
     //LISTAGEM DOS ITENS ATRAVÉS DOS MÉTODOS GERADOS PELO CONTRATO
-    @GetMapping
     @Override
     public ResponseEntity<ResponseUsuario> listaUsuario() {
         ResponseUsuario response = new ResponseUsuario();
@@ -40,7 +38,6 @@ public class UsuarioController implements UsuarioApi {
 
     //LISTAGEM DOS ITENS POR ID ATRAVÉS DOS MÉTODOS GERADOS PELO CONTRATO
     @Override
-    @GetMapping("/{id}")
     public ResponseEntity<ResponseUsuario> listaUsuarioId(@PathVariable("id") Integer id) {
         ResponseUsuario responseUsuario = new ResponseUsuario();
         Usuario usuario = service.findById(id.longValue());
@@ -52,8 +49,6 @@ public class UsuarioController implements UsuarioApi {
 
     //EXCLUSÃO LÓGICA DOS ITENS POR ID ATRAVÉS DOS MÉTODOS GERADO PELO CONTRATO
     @Override
-    @DeleteMapping("/{id}")
-    @Transactional
     public ResponseEntity<ResponseUsuario> deleteUsuario(@PathVariable("id")Integer id) {
         ResponseUsuario responseUsuario = new ResponseUsuario();
         Usuario usuario = service.findById(id.longValue());
@@ -67,8 +62,6 @@ public class UsuarioController implements UsuarioApi {
 
     //CADASTRO DE NOVOS ITENS ATRAVÉS DOS MÉTODOS GERADO PELO CONTRATO
     @Override
-    @PostMapping
-    @Transactional
     public ResponseEntity<ResponseUsuario> cadastroUsuario(@RequestBody RequestPayloadUsuario requestPayloadUsuario) {
         ResponseUsuario responseUsuario = new ResponseUsuario();
         Usuario usuario = service.fromRequest(requestPayloadUsuario);
@@ -82,8 +75,6 @@ public class UsuarioController implements UsuarioApi {
 
     //ALTERAÇÃO DOS ITENS ATRAVÉS DOS MÉTODOS GERADOS PELO CONTRATO
     @Override
-    @PutMapping("/{id}")
-    @Transactional
     public ResponseEntity<ResponseUsuario> alteraUsuario(@PathVariable("id")Integer id,@RequestBody RequestPayloadUsuario requestPayloadUsuario) {
         ResponseUsuario responseUsuario = new ResponseUsuario();
         Usuario validador = service.validador(id.longValue());
@@ -99,8 +90,6 @@ public class UsuarioController implements UsuarioApi {
 
     //ATIVAÇÃO LÓGICA DOS ITENS ATRAVÉS DO MÉTODO "REATIVA" CRIADO NA CLASSE SERVICE
     @Override
-    @GetMapping("/ativa/{id}")
-    @Transactional
     public ResponseEntity<ResponseUsuario> reativaUsuario(@PathVariable("id") Integer id) {
         ResponseUsuario responseUsuario = new ResponseUsuario();
         Usuario usuario = service.reativa(id.longValue());

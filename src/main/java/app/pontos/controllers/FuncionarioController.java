@@ -1,11 +1,13 @@
 package app.pontos.controllers;
 
 import app.pontos.apis.FuncionarioApi;
+import app.pontos.apis.FuncionarioApiDelegate;
 import app.pontos.components.RequestPayloadFuncionario;
 import app.pontos.components.ResponseFuncionario;
 import app.pontos.mappers.FuncionarioMapper;
 import app.pontos.models.Funcionario;
 import app.pontos.services.FuncionarioService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +17,12 @@ import java.util.Collections;
 import java.util.List;
 
 @RestController
-@RequestMapping("funcionario")
-public class FuncionarioController implements FuncionarioApi {
+public class FuncionarioController implements FuncionarioApiDelegate {
 
     @Autowired
     FuncionarioService service;
 
     //LISTAGEM DOS ITENS ATRAVÉS DOS MÉTODOS GERADOS PELO CONTRATO
-    @GetMapping
     @Override
     public ResponseEntity<ResponseFuncionario> listaFuncionario() {
         ResponseFuncionario response = new ResponseFuncionario();
@@ -36,7 +36,6 @@ public class FuncionarioController implements FuncionarioApi {
 
     //LISTAGEM DOS ITENS POR ID ATRAVÉS DOS MÉTODOS GERADOS PELO CONTRATO
     @Override
-    @GetMapping("/{id}")
     public ResponseEntity<ResponseFuncionario> listaFuncionarioId(@PathVariable("id") Integer id) {
         ResponseFuncionario response = new ResponseFuncionario();
         Funcionario funcionario = service.findById(id.longValue());
@@ -49,7 +48,6 @@ public class FuncionarioController implements FuncionarioApi {
 
     //EXCLUSÃO LÓGICA DOS ITENS POR ID ATRAVÉS DOS MÉTODOS GERADO PELO CONTRATO
     @Override
-    @DeleteMapping("/{id}")
     public ResponseEntity<ResponseFuncionario> deleteFuncionario(@PathVariable("id") Integer id) {
         ResponseFuncionario response = new ResponseFuncionario();
         Funcionario funcionario = service.findById(id.longValue());
@@ -62,8 +60,6 @@ public class FuncionarioController implements FuncionarioApi {
 
     //CADASTRO DE NOVOS ITENS ATRAVÉS DOS MÉTODOS GERADO PELO CONTRATO
     @Override
-    @PostMapping
-    @Transactional
     public ResponseEntity<ResponseFuncionario> cadastroFuncionario(@RequestBody RequestPayloadFuncionario requestPayloadFuncionario) {
         ResponseFuncionario response = new ResponseFuncionario();
         Funcionario funcionario = service.fromRequest(requestPayloadFuncionario);
@@ -77,8 +73,6 @@ public class FuncionarioController implements FuncionarioApi {
 
     //ALTERAÇÃO DOS ITENS ATRAVÉS DOS MÉTODOS GERADOS PELO CONTRATO
     @Override
-    @PutMapping("/{id}")
-    @Transactional
     public ResponseEntity<ResponseFuncionario> alteraFuncionario(@PathVariable("id") Integer id, @RequestBody RequestPayloadFuncionario requestPayloadFuncionario) {
         ResponseFuncionario response = new ResponseFuncionario();
         Funcionario validador = service.validador(id.longValue());
@@ -95,8 +89,6 @@ public class FuncionarioController implements FuncionarioApi {
 
     //ATIVAÇÃO LÓGICA DOS ITENS ATRAVÉS DO MÉTODO "REATIVA" CRIADO NA CLASSE SERVICE
     @Override
-    @GetMapping("/ativa/{id}")
-    @Transactional
     public ResponseEntity<ResponseFuncionario> reativaFuncionario(@PathVariable("id") Integer id) {
         ResponseFuncionario responseFuncionario = new ResponseFuncionario();
         Funcionario funcionario = service.reativa(id.longValue());
