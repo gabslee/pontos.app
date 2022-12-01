@@ -12,12 +12,20 @@ services:
     volumes:
       - dbmysql-mysql-data:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "3308:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=dbmysql
       - MYSQL_DATABASE=dbmysql
       - MYSQL_USER=dbmysql
       - MYSQL_PASSWORD=dbmysql
 
-
+  springboot:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: pontos-app
+    env_file:
+      - .env.docker
+    ports:
+      - 8090:8080
 
