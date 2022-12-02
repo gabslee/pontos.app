@@ -62,7 +62,7 @@ Este componente segue uma estrutura de pacotes divididos em funcionalidades
 
 
 ## Compilando com Docker
-Obs.: para esse modelo de compilação não é necessário ter nengum ferramenta Java, apenas o Docker.
+Obs.: para esse modelo de compilação não é necessário ter nenhuma ferramenta Java, apenas o Docker.
 
 
 Shell docker-compose build
