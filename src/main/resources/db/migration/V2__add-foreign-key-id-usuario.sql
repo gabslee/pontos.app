@@ -1,1 +1,0 @@
-alter table empresas add column id_usuario int;
