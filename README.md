@@ -12,12 +12,11 @@ Este componente segue uma estrutura de pacotes divididos em funcionalidades
 - Linguagem: JDK 17
 - Servidor Tomcat 9
 - Frameworks:
-    - Spring Boot 2.7.5
-    - Spring Starter Web
-    - Spring Data JPA
-    - Spring Doc OpenAPI 1.6.13
+  - Spring Boot 2.7.5
+  - Spring Starter Web
+  - Spring Data JPA
+  - Spring Doc OpenAPI 1.6.13
 - Gerenciador de dependências: Maven
-- Database: MySQL
 
 
 
@@ -36,7 +35,7 @@ Este componente segue uma estrutura de pacotes divididos em funcionalidades
 ## Compilando
 
 ## Compilando localmente(JDK instalada na maquina)
-- ### Build e Testes
+- ###Build e Testes
 ```bash
   mvn clean package
 ```
@@ -60,3 +59,15 @@ Este componente segue uma estrutura de pacotes divididos em funcionalidades
 ```bash
   mvn generate-resources
 ```
+
+
+## Compilando com Docker
+Obs.: para esse modelo de compilação não é necessário ter nengum ferramenta Java, apenas o Docker.
+
+
+Shell docker-compose build
+
+## Documentação
+
+[Documentação Confluence](https://dev-farm.atlassian.net/wiki/spaces/FARM/pages/1274281985/CRUD+-+App+Pontos+Farm)
+
