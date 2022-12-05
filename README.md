@@ -65,7 +65,9 @@ Este componente segue uma estrutura de pacotes divididos em funcionalidades
 Obs.: para esse modelo de compilação não é necessário ter nenhuma ferramenta Java, apenas o Docker.
 
 
-Shell docker-compose build
+```bash
+  docker-compose up --build -d
+```
 
 ## Documentação
 
