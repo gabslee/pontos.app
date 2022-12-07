@@ -487,6 +487,82 @@ paths:
           content:
             application/json:
               example: Not Found
+  /usuario/upload/{id}:
+    parameters:
+      - name: id
+        in: path
+        schema:
+          type: integer
+        required: true
+
+    get:
+      tags:
+        - usuario
+      summary: Recupera o Local da foto através do Id
+      operationId: getImage
+      security:
+        - auth: [ ]
+      responses:
+        '201':
+          description: Foto do Usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUploadImage'
+
+    post:
+      tags:
+        - usuario
+      summary: Sobe uma nova foto para o usuario por Id
+      operationId: uploadImage
+      security:
+        - auth: [ ]
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/requestPayloadUploadImage'
+      responses:
+        '201':
+          description: Foto publicada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUploadImage'
+    put:
+      tags:
+        - usuario
+      summary: Altera a foto do usuario através do Id
+      operationId: alteraImage
+      security:
+        - auth: [ ]
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/requestPayloadUploadImage'
+      responses:
+        '201':
+          description: Foto Alterada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUploadImage'
+    delete:
+      tags:
+        - usuario
+      summary: exclusão real da foto do usuário através do Id
+      operationId: deleteImage
+      security:
+        - auth: [ ]
+      responses:
+        '201':
+          description: Foto Excluida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUploadImage'
+
 components:
   schemas:
     responseUsuario:
@@ -530,8 +606,6 @@ components:
             nascimento:
               type: string
               example: aaaa-mm-dd
-            foto:
-              type: string
     requestPayloadFuncionario:
       type: object
       properties:
@@ -660,6 +734,26 @@ components:
               type: string
             id_usuario:
               type: integer
+    requestPayloadUploadImage:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+    responseUploadImage:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id_usuario:
+                type: string
+              file:
+                type: string
   securitySchemes:
     auth:
       type: http

@@ -21,6 +21,7 @@ public class Usuario {
     Long id;
     String nome;
     String email;
+    @Column(length = 1200)
     String senha;
     @Column(name = "cpf")
     String cpf;

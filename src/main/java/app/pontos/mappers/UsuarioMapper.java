@@ -5,6 +5,8 @@ package app.pontos.mappers;
 
 
 
+import app.pontos.components.ResponseUploadImage;
+import app.pontos.components.ResponseUploadImageData;
 import app.pontos.components.ResponseUsuarioData;
 import app.pontos.enums.status_usuario;
 import app.pontos.models.Usuario;
@@ -12,6 +14,7 @@ import app.pontos.models.Usuario;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class UsuarioMapper {
 
@@ -56,6 +59,22 @@ public class UsuarioMapper {
             usuarios.add(toModel(responseUsuario));
         });
         return usuarios;
+    }
+
+    //método que converte dado responseUploadImageData em em um dado usuario
+
+    public static ResponseUploadImageData toImage(Usuario usuario){
+        ResponseUploadImageData responseUpload = new ResponseUploadImageData();
+        responseUpload.setIdUsuario(usuario.getId().toString());
+        responseUpload.setFile(usuario.getFoto());
+        return  responseUpload;
+    }
+    //método que utiliza uma lista para conversão de dados ResponseUploadImageData em Usuario
+    public static List<ResponseUploadImageData> toImage(List<Usuario> usuarios){
+        List<ResponseUploadImageData> responseUpload = new ArrayList<>();
+        usuarios.forEach(usuario -> responseUpload.add(toImage(usuario)));
+        return responseUpload;
+
     }
 
 }

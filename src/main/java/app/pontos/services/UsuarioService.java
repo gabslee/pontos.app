@@ -6,11 +6,21 @@ package app.pontos.services;
 
 
 import app.pontos.components.RequestPayloadUsuario;
+import app.pontos.components.ResponseUploadImageData;
 import app.pontos.enums.status_usuario;
 import app.pontos.models.Usuario;
 import app.pontos.repository.UsuarioRepository;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +30,11 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository repository;
+    private String path;
+
+    @Autowired
+    private PasswordEncoder encoder;
+
 
 
     //MÉTODO PARA LISTAR TODOS OS ITENS DA TABELA UTILIZANDO JPA
@@ -38,7 +53,6 @@ public class UsuarioService {
 
 
 
-
     //MÉTODO PARA CADASTRAR NOVO ITEM NA TABELA UTILIZANDO JPA
     public Usuario create(Usuario usuario) {
         return repository.save(usuario);
@@ -54,9 +68,24 @@ public class UsuarioService {
         Optional<Usuario> obj = repository.findById(id);
         Usuario usuario = repository.getReferenceById(id);
         usuario.setStatus(status_usuario.INATIVO);
+        repository.save(usuario);
         return obj.get();
     }
 
+
+    /*MÉTODO PARA FAZER A EXCLUSÃO REAL DA IMAGEM ATRAVÉS DO ID, E ALTERAR A FOTO(USUÁRIO) E O
+    FILE(RESPONSEUPLOADIMAGE) PARA NULL*/
+    @SneakyThrows
+    public void deleteImage(Long id){
+        Optional<Usuario> obj = repository.findById(id);
+        Usuario usuario = repository.getReferenceById(id);
+        usuario.setFoto(null);
+        ResponseUploadImageData responseUpload = new ResponseUploadImageData();
+        responseUpload.setFile(null);
+        repository.save(usuario);
+        Files.delete(Path.of(path));
+
+    }
 
 
 
@@ -75,6 +104,7 @@ public class UsuarioService {
         Optional<Usuario> obj = repository.findById(id);
         Usuario usuario = repository.getReferenceById(id);
         usuario.setStatus(status_usuario.ATIVO);
+        repository.save(usuario);
         return obj.get();
     }
 
@@ -94,13 +124,11 @@ public class UsuarioService {
         if(requestPayloadUsuario.getData().getEmail() != null){
         usuario.setEmail(requestPayloadUsuario.getData().getEmail());}
         if(requestPayloadUsuario.getData().getSenha() != null){
-        usuario.setSenha(requestPayloadUsuario.getData().getSenha());}
+        usuario.setSenha(encoder.encode(requestPayloadUsuario.getData().getSenha()));}
         if(requestPayloadUsuario.getData().getCpf() != null){
         usuario.setCpf(requestPayloadUsuario.getData().getCpf());}
         if(requestPayloadUsuario.getData().getNascimento() != null){
         usuario.setNascimento(LocalDate.parse(requestPayloadUsuario.getData().getNascimento()));}
-        if(requestPayloadUsuario.getData().getFoto() != null){
-        usuario.setFoto(requestPayloadUsuario.getData().getFoto());}
         return usuario;
     }
 
@@ -138,6 +166,16 @@ public class UsuarioService {
         return usuario;
     }
 
+    /*MÉTODO PARA SALVAR A IMAGEM DE PERFIL E ALTERAR A FOTO E O FILE PARA O LOCAL ONDE A
+    * FOTO ESTÁ SALVA*/
+    public Usuario upload(Usuario usuario, MultipartFile file) throws Exception {
+        String Path_Directory = "C:\\Users\\gabriel.menezes\\Desktop\\pontosApp\\pontos.app\\src\\main\\resources\\images";
+        Files.copy(file.getInputStream(), Paths.get(Path_Directory + File.separator + file.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+        path = "C:\\Users\\gabriel.menezes\\Desktop\\pontosApp\\pontos.app\\src\\main\\resources\\images\\" + file.getOriginalFilename();
+        usuario.setFoto(path);
+        repository.save(usuario);
+        return usuario;
+    }
 
 
 

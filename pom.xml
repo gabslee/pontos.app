@@ -81,7 +81,9 @@
 			<artifactId>spring-security-core</artifactId>
 			<version>5.7.4</version>
 		</dependency>
-	</dependencies>
+
+
+    </dependencies>
 	<build>
 		<plugins>
 			<plugin>

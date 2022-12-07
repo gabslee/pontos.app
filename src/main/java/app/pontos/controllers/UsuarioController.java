@@ -1,19 +1,20 @@
 package app.pontos.controllers;
 
-import app.pontos.apis.UsuarioApi;
 import app.pontos.apis.UsuarioApiDelegate;
 import app.pontos.components.RequestPayloadUsuario;
+import app.pontos.components.ResponseUploadImage;
 import app.pontos.components.ResponseUsuario;
 import app.pontos.mappers.UsuarioMapper;
 import app.pontos.models.Usuario;
 import app.pontos.services.UsuarioService;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import javax.transaction.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import java.util.Collections;
 import java.util.List;
+
 
 @RestController
 public class UsuarioController implements UsuarioApiDelegate {
@@ -97,4 +98,48 @@ public class UsuarioController implements UsuarioApiDelegate {
         return ResponseEntity.ok(responseUsuario);
     }
 
+
+    //CADASTRO DE NOVA FOTO PARA O USUÁRIO
+    @SneakyThrows
+    @Override
+    public ResponseEntity<ResponseUploadImage> uploadImage(Integer id, MultipartFile file) {
+        ResponseUploadImage responseUpload = new ResponseUploadImage();
+        Usuario usuario = service.findById(id.longValue());
+        usuario = service.upload(usuario,file);
+        responseUpload.setData(Collections.singletonList(UsuarioMapper.toImage(usuario)));
+        return ResponseEntity.ok(responseUpload);
+
+    }
+
+    //ALTERAÇÃO DA FOTO DO USUÁRIO ATRAVÉS DO ID
+    @SneakyThrows
+    @Override
+    public ResponseEntity<ResponseUploadImage> alteraImage(Integer id, MultipartFile file) {
+        ResponseUploadImage responseUpload = new ResponseUploadImage();
+        Usuario usuario = service.findById(id.longValue());
+        usuario = service.upload(usuario,file);
+        responseUpload.setData(Collections.singletonList(UsuarioMapper.toImage(usuario)));
+        return ResponseEntity.ok(responseUpload);
+    }
+
+
+    //EXCLUSÃO REAL DA FOTO DO USUÁRIO UTILIZANDO O ID
+    @Override
+    public ResponseEntity<ResponseUploadImage> deleteImage(Integer id) {
+        ResponseUploadImage responseUpload = new ResponseUploadImage();
+        Usuario usuario = service.findById(id.longValue());
+        service.deleteImage(id.longValue());
+        responseUpload.setData(Collections.singletonList(UsuarioMapper.toImage(usuario)));
+        return ResponseEntity.ok(responseUpload);
+    }
+
+    //LISTAGEM DE TODAS AS IMAGENS DE USUÁRIO
+    @Override
+    public ResponseEntity<ResponseUploadImage> getImage(Integer id) {
+        ResponseUploadImage responseUpload = new ResponseUploadImage();
+        Usuario usuario = service.findById(id.longValue());
+        responseUpload.setData(Collections.singletonList(UsuarioMapper.toImage(usuario)));
+        return ResponseEntity.ok(responseUpload);
+    }
 }
+
