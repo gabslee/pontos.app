@@ -171,7 +171,7 @@ public class UsuarioService {
     public Usuario upload(Usuario usuario, MultipartFile file) throws Exception {
         String Path_Directory = "C:\\Users\\gabriel.menezes\\Desktop\\pontosApp\\pontos.app\\src\\main\\resources\\images";
         Files.copy(file.getInputStream(), Paths.get(Path_Directory + File.separator + file.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
-        path = "C:\\Users\\gabriel.menezes\\Desktop\\pontosApp\\pontos.app\\src\\main\\resources\\images\\" + file.getOriginalFilename();
+        path = Path_Directory + "\\" + file.getOriginalFilename();
         usuario.setFoto(path);
         repository.save(usuario);
         return usuario;

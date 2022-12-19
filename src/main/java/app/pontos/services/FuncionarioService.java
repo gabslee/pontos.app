@@ -83,7 +83,7 @@ public class FuncionarioService {
      * NO CASO DE ALGUMA MUDAÇA SER FEITA EM SOMENTE UM CAMPO*/
     public Funcionario fromRequest(RequestPayloadFuncionario requestPayloadFuncionario){
         Funcionario funcionario = new Funcionario();
-        if(requestPayloadFuncionario.getData().getTipo() != null){
+        if(requestPayloadFuncionario.getData().getTipo()!= null){
         funcionario.setTipo(tipo_funcionario.valueOf(requestPayloadFuncionario.getData().getTipo()));}
         if(requestPayloadFuncionario.getData().getCargo() != null){
         funcionario.setCargo(requestPayloadFuncionario.getData().getCargo());}
@@ -105,7 +105,7 @@ public class FuncionarioService {
     public Funcionario validador(Long id){
         Optional<Funcionario> funcionario = repository.findById(id);
         Funcionario validador = new Funcionario();
-        validador.setTipo(tipo_funcionario.toTipo(funcionario.get().getTipo().getTipo()));
+        validador.setTipo(funcionario.get().getTipo());
         validador.setCargo(funcionario.get().getCargo());
         validador.setData_admissao(funcionario.get().getData_admissao());
         validador.setData_demissao(funcionario.get().getData_demissao());
@@ -120,7 +120,7 @@ public class FuncionarioService {
     /*MÉTODO PARA UTILIZA O CLONE PARA TRANSFERIR OS DADOS ANTIGOS DA ENTIDADE QUE VIERAM
      * NULOS DA REQUISIÇÃO, POR MOTIVO DE ALTERAÇÃO EM SOMENTE UM CAMPO */
     public Funcionario validaFuncionario(Funcionario funcionario, Funcionario funcionarioValidado){
-        if(funcionario.getTipo() == null)funcionario.setTipo(tipo_funcionario.valueOf(String.valueOf(funcionarioValidado.getTipo())));
+        if(funcionario.getTipo() == null)funcionario.setTipo(funcionarioValidado.getTipo());
         if(funcionario.getCargo() == null)funcionario.setCargo(funcionarioValidado.getCargo());
         if (funcionario.getData_admissao() == null)funcionario.setData_admissao(funcionarioValidado.getData_admissao());
         if(funcionario.getData_demissao() == null)funcionario.setData_demissao(funcionarioValidado.getData_demissao());

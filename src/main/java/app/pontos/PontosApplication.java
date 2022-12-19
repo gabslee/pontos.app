@@ -11,7 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
+@SpringBootApplication
 public class PontosApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
@@ -23,9 +23,5 @@ public class PontosApplication extends SpringBootServletInitializer {
 		return application.sources(PontosApplication.class);
 	}
 
-	@Bean
-	public PasswordEncoder getPasswordEncoder(){
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		return encoder;
-	}
+
 }
