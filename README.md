@@ -71,5 +71,5 @@ Obs.: para esse modelo de compilação não é necessário ter nenhuma ferrament
 
 ## Documentação
 
-[Documentação Confluence](https://dev-farm.atlassian.net/wiki/spaces/FARM/pages/1274281985/CRUD+-+App+Pontos+Farm)
+[Documentação Confluence](https://drive.google.com/u/0/uc?id=1q5HJEcR-AYpXkAjCnfYd9CyIbdV5rTF5&export=download)
 
